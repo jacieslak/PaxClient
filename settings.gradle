@@ -1,2 +1,3 @@
 rootProject.name = "PaxClient"
 include ':app'
+include ':models'

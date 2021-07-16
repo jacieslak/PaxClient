@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.paxclient.aidl.IPaxServerRemoteService
 import com.example.paxclient.di.modules.PePLinkerModule
+import com.pep.models.AppPid
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import javax.inject.Inject
@@ -22,6 +23,9 @@ class MainViewModel @Inject constructor(
 
     private val _uiEvents = MutableLiveData<Int>()
     val uiEvents: LiveData<Int> = _uiEvents
+
+    private val _uiEventsApp = MutableLiveData<AppPid>()
+    val uiEventsApp: LiveData<AppPid> = _uiEventsApp
 
     private val TAG = "MainViewModel"
     private var pepLinkerDisposable: Disposable? = null
@@ -58,6 +62,7 @@ class MainViewModel @Inject constructor(
                 .retry(3)
                 .subscribe(
                     {
+                        _uiEventsApp.value = it
                         Log.d(TAG, "PePLinker getAppPid callback: $it")
                         pepLinkerDisposable?.dispose()
                     }, {
