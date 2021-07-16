@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         })
         tv.setOnClickListener{
             viewModel.getPid()
+            viewModel.getAppPid()
         }
     }
 }

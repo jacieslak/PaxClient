@@ -46,4 +46,24 @@ class MainViewModel @Inject constructor(
                     }
                 )
     }
+
+    fun getAppPid() {
+        pepLinkerDisposable?.dispose()
+        Log.d(TAG, "getAppPid")
+        pepLinkerDisposable =
+            RxPePLinkerConnection.bind(pepLinker, IPaxServerRemoteService::class.java)
+                .flatMap { it.getAppPid() }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .retry(3)
+                .subscribe(
+                    {
+                        Log.d(TAG, "PePLinker getAppPid callback: $it")
+                        pepLinkerDisposable?.dispose()
+                    }, {
+                        Log.d(TAG, "PepLinker getAppPid error: $it")
+                        pepLinkerDisposable?.dispose()
+                    }
+                )
+    }
 }
