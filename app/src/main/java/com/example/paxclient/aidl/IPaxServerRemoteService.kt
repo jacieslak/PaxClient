@@ -5,6 +5,6 @@ import io.reactivex.Observable
 import pl.pep.peplinker.annotation.RemoteInterface
 
 @RemoteInterface
-interface IPaxServiceRemoteService {
+interface IPaxServerRemoteService {
     fun getPid(): Observable<Int>
 }
